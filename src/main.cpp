@@ -2,11 +2,7 @@
 
 const uint8_t MYLED = 15; // Onboard yellow LED at Seed XIAO ESP32C6
 
-void setup() {
-    Serial.begin(115200);
-    delay(10000);
-    pinMode(MYLED, OUTPUT);
-
+void logChipInfo(void) {
     Serial.println("----------------------------------------");
     Serial.print("Chip model=");
     Serial.println(ESP.getChipModel());
@@ -35,15 +31,23 @@ void setup() {
     Serial.print("Free PSRAM=");
     Serial.println(ESP.getFreePsram());
     Serial.println("----------------------------------------");
+}
+
+void setup() {
+    Serial.begin(115200);
+    delay(10000);
+
+    logChipInfo();
+
+    pinMode(MYLED, OUTPUT); // output for blink LED
 
     Serial.println("Setup done, start loop()\nType ? for Help");
 }
 
 void loop() {
-    static uint8_t ledStatus = LOW;
-    digitalWrite(MYLED, ledStatus);
-    ledStatus = (ledStatus == LOW ? HIGH : LOW);
+    digitalWrite(MYLED, !digitalRead(MYLED)); // do blink
 
+    // Basic console
     if (Serial.available()) {
         switch (Serial.read()) {
         case '?':
