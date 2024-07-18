@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-const uint8_t MYLED = 15; // Onboard yellow LED at Seed XIAO ESP32C6
+const uint8_t MYLED = 15; // GPIO of onboard yellow LED at Seed XIAO ESP32C6 (LED_BUILTIN is not properly defined for this board)
 
 void logChipInfo(void) {
     Serial.println("----------------------------------------");
