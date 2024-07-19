@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include "console.h"
+#include "wifinetwork.h"
 
 const uint8_t MYLED = 15; // GPIO of onboard yellow LED at Seed XIAO ESP32C6 (LED_BUILTIN is not properly defined for this board)
 
@@ -22,14 +24,6 @@ void logChipInfo(void) {
     Serial.print("ESP-IDF version=");
     Serial.println(ESP.getSdkVersion());
 
-    Serial.print("Free heap=");
-    Serial.println(ESP.getFreeHeap());
-
-    Serial.print("Min free heap=");
-    Serial.println(ESP.getMinFreeHeap());
-
-    Serial.print("Free PSRAM=");
-    Serial.println(ESP.getFreePsram());
     Serial.println("----------------------------------------");
 }
 
@@ -41,36 +35,15 @@ void setup() {
 
     pinMode(MYLED, OUTPUT); // output for blink LED
 
+    startNetwork();
+    logNetworkStatus();
+
     Serial.println("Setup done, start loop()\nType ? for Help");
 }
 
 void loop() {
     digitalWrite(MYLED, !digitalRead(MYLED)); // do blink
 
-    // Basic console
-    if (Serial.available()) {
-        switch (Serial.read()) {
-        case '?':
-            Serial.println("* = restart");
-            Serial.println("! = crash");
-            break;
-        case '*':
-            Serial.println("Do restart...");
-            Serial.flush();
-            ESP.restart();
-            break;
-        case '!':
-            Serial.println("Do crash...");
-            Serial.flush();
-            {
-                char *cptr = nullptr;
-                *cptr = '!';
-            }
-            break;
-        default:
-            // ignore
-            break;
-        }
-    }
+    consoleLoop();
     delay(1000);
 }

@@ -4,6 +4,9 @@ Blink program for Seeed Studio XIAO ESP32C6, using Arduino and Platformio
 ESP32C6 info: https://wiki.seeedstudio.com/xiao_esp32c6_getting_started/
 
 The idea is to extend the Blink program in due time with WiFi web app and other features from my previous projects, to test the Tasmota framework
+Releases:
+* 1.x Basic blink with console
+* 2.x Start WiFi
 
 ## Migration Arduino 2 towards 3
 Along the path of extending Blink, I will need to migrate my existing project code from from Arduino ESP32 core2.X (based on ESP-IDF 4.4) to version 3.0 (based on ESP-IDF 5.1).
